@@ -1,9 +1,10 @@
 import React, { Fragment } from 'react'
+import Layout from './components/layout/layout'
 
 function App() {
   return (
     <Fragment>
-      <h1>My React App1</h1>
+      <Layout />
     </Fragment>
   )
 }

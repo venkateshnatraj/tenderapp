@@ -6,7 +6,8 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1
   },
   root: {
-    display: 'flex'
+    display: 'flex',
+    
   },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
@@ -58,7 +59,8 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen
     }),
     marginLeft: 100
-  }
+  },
+
 }))
 
 module.exports = { useStyles }

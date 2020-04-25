@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react'
 
-const TopRateEntry=()=> {
+const TopRateEntry = () => {
   return (
     <Fragment>
-        <h1>top rate</h1>
+      <h1>top rate</h1>
     </Fragment>
   )
 }

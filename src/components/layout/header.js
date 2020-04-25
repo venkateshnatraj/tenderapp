@@ -1,8 +1,10 @@
 import React, { Fragment } from 'react'
 import { AppBar, Toolbar, Typography, IconButton } from '@material-ui/core'
-import Button from '@material-ui/core/Button'
 import MenuIcon from '@material-ui/icons/Menu'
 import clsx from 'clsx'
+import PermIdentityIcon from '@material-ui/icons/PermIdentity'
+import Badge from '@material-ui/core/Badge'
+import NotificationsActiveSharpIcon from '@material-ui/icons/NotificationsActiveSharp'
 import { useStyles } from './styles'
 
 const Header = (props) => {
@@ -26,7 +28,13 @@ const Header = (props) => {
           <Typography variant="h6" className={classes.title}>
             Tender
           </Typography>
-          <Button color="inherit">Login</Button>
+          <PermIdentityIcon />
+          <Typography variant="body2" className={classes.space}>
+            Welcome Venkat
+          </Typography>
+          <Badge badgeContent={4} color="secondary">
+            <NotificationsActiveSharpIcon />
+          </Badge>
         </Toolbar>
       </AppBar>
     </Fragment>

@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react'
 
-const SampleView=()=>{
+const SampleView = () => {
   return (
     <Fragment>
-        <h1>Sample View</h1>
+      <h1>Sample View</h1>
     </Fragment>
   )
 }

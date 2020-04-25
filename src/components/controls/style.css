@@ -1,0 +1,53 @@
+.container input {
+    height: 36px;
+    padding: 0px 14px;
+    width: 300px;
+  }
+  
+
+  .container2  {
+    height: 36px;
+    padding: 0px 14px;
+    width: 200px;
+  }
+  
+  .container label {
+    height: 36px;
+    top: -116px;
+  }
+  
+  .container label[data-shrink="true"] {
+    top: 0;
+  }
+  /* .required {
+    padding-left: .5em;
+    padding-top: 6px;
+    margin-right: -1.25em;
+    position: relative;
+    display: inline;
+    z-index: 2;
+    color:red;
+  } */
+  /* box-shadow: 0 2px  3px #ccc;
+  border: 1px solid #eee; */
+  .fieldContainer {
+    margin : 10px 10px 10px 10px;
+    width: 100%;
+    box-sizing: initial;
+    justify-content: space-evenly; 
+    display: inline-flex;
+    padding: 1px;
+    inline-size: 40em;
+}
+
+.Input {
+    margin-top: 1px ;
+    margin-bottom: 10px ;
+    margin-left: 10px;
+}
+
+@media(min-width: 600px) {
+    .Contact {
+        width: 500px;
+    }
+}

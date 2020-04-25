@@ -1,8 +1,10 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 module.exports = {
-    entry: './src/index.js',
+    //entry: './src/index.js',
+    entry: ['babel-polyfill', './src/index.js'],
+
     output : {
         path : path.join(__dirname, '/dist'),
         filename : 'bundle.js',
@@ -21,12 +23,25 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: 'babel-loader'
                 
+             },
+             {
+                test: /\.css$/,
+                use: [
+                  'style-loader',
+                  'css-loader'
+                ]
              }
         ]
     },
     devServer: {
         historyApiFallback: true,
+        // headers: {
+        //     'Access-Control-Allow-Origin': '*',
+        //     'Access-Control-Allow-Headers': '*',
+        //   },
+      
       },
+    //devtool: 'cheap-module-eval-source-map',
     plugins: [
         new HtmlWebpackPlugin({
             template : './src/index.html'

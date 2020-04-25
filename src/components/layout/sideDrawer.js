@@ -9,14 +9,12 @@ import { IconButton } from '@material-ui/core'
 import { useStyles } from './styles'
 import ListItemLink from './listItemLink'
 
-
 const SideDrawer = (props) => {
   const classes = useStyles()
   const theme = useTheme()
 
   return (
     <Fragment>
- 
       <Drawer
         className={classes.drawer}
         variant="persistent"
@@ -30,13 +28,12 @@ const SideDrawer = (props) => {
           </IconButton>
         </div>
         <Divider />
-        <List >
-          <ListItemLink to="/dailyauction" primary="Daily Auction"/>
-          <ListItemLink to="/toprate" primary="Top Rate Entry"  />
-          <ListItemLink to="/dummynumber" primary="Dummy Number Entry"/>
-          <ListItemLink to="/sampleview" primary="Sample View"/>
-          <ListItemLink to="/samplereport" primary="Sample Report"/>
-
+        <List>
+          <ListItemLink to="/dailyauction" primary="Daily Auction" />
+          <ListItemLink to="/toprate" primary="Top Rate Entry" />
+          <ListItemLink to="/dummynumber" primary="Dummy Number Entry" />
+          <ListItemLink to="/sampleview" primary="Sample View" />
+          <ListItemLink to="/samplereport" primary="Sample Report" />
         </List>
       </Drawer>
     </Fragment>

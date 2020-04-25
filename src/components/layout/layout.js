@@ -26,16 +26,16 @@ const Layout = (props) => {
             <Header isOpen={open} open={handleDrawerOpen} />
             <SideDrawer isOpen={open} close={handleDrawerClose} />
           </Grid>
-          <main className={clsx(classes.content, { [classes.contentShift]: open })}>
-            <div className={classes.drawerHeader} />
-           
+          <main>
+            {/* className={clsx(classes.content, { [classes.contentShift]: open })} */}
+            {/* <div className={classes.drawerHeader} /> */}
+
             <Grid item container>
               <Grid item xs={1} sm={2} />
-              <Grid item xs={12} sm={8}>
-
+              <Grid item xs={12} sm={10}>
                 {props.children}
               </Grid>
-              <Grid item xs={1} sm={2} />
+              {/* <Grid item xs={1} sm={2} /> */}
             </Grid>
           </main>
         </Grid>

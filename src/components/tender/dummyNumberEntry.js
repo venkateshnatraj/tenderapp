@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react'
 
-const DummyNumberEntry=() => {
+const DummyNumberEntry = () => {
   return (
     <Fragment>
-        <h1>Dummy Number</h1>
+      <h1>Dummy Number</h1>
     </Fragment>
   )
 }

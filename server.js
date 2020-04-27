@@ -11,9 +11,9 @@ var express = require('express');
 // Local files
 var config = require('./webpack.config.js');
  var api = require('./api');
-console.log(process.env.NODE_ENV)
-if (process.env.NODE_ENV !== 'dev-server') {
-    console.log('test1')
+ const env = process.env.NODE_ENV
+ console.log(env)
+if (env && env.trim() === "dev-server") {
   // = DEV =
   // This stands up the webpack-dev-server
   // with Hot Module Reloading enabled.
@@ -37,6 +37,7 @@ if (process.env.NODE_ENV !== 'dev-server') {
   // Added `proxy` configuration for API fix
   var server = new webpackDevServer(compiler, {
     hot: true,
+    open: true,
     proxy: {
       '/api': {
         target: 'http://localhost:8081',
@@ -48,24 +49,8 @@ if (process.env.NODE_ENV !== 'dev-server') {
   // ############## /IMPORTANT ###############
   // #########################################
 
-  server.listen(8080);
-  console.log(process.env.NODE_ENV)
-  var app = express();
-
-  // #####################
-  // ##### IMPORTANT #####
-  // removed `cors` usage
-  // ##### /IMPORTANT ####
-  // #####################
-
-  // We define the API routes here
-  api.defineApi(app);
-
-  app.listen(8081, function () {
-    console.log('API is up!')
-  });
-} else if (process.env.NODE_ENV === 'dev-api') {
-    console.log("llll")
+   server.listen(8080);
+} else if (env && env.trim() === 'dev-api') {
   // = DEV =
   // This stands up the express.js API
   var app = express();
@@ -97,7 +82,7 @@ if (process.env.NODE_ENV !== 'dev-server') {
   app.use('/', express.static('bundle'));
 
   // We define the API routes here
-  //api.defineApi(app);
+  api.defineApi(app);
 
   app.listen(8080, function () {
     console.log('Both front-end and API are up!')

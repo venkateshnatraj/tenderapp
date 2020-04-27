@@ -2,4 +2,5 @@
 
 ## steps to start the app
    - #####  `npm i`
-   - ##### `npm start`
+   - #####  `npm run dev` for development
+   - ##### `npm start` for production

@@ -14,8 +14,11 @@ const useDailyAuctions = () => {
   const resetDailyAuction = () => {
     dispatch({ type: 'resetDailyAuctionData', payload: resetData })
   }
+  const setMasterData = (value) => {
+    dispatch({ type: 'setMasterData', payload: value })
+  }
 
-  return { setDailyAuction, save, resetDailyAuction }
+  return { setDailyAuction, save, resetDailyAuction, setMasterData }
 }
 
 const resetData = {

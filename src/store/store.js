@@ -31,6 +31,12 @@ const reducer = (state, action) => {
       const resetData = { ...state }
       resetData.tenderDailyAuction = { ...action.payload }
       return { ...state, ...resetData }
+    case 'setMasterData':
+        const master = { ...state }
+        console.log('action.payload' )
+        console.log(action.payload )
+        master.masterData = { ...action.payload }
+        return { ...state, ...master }
     default:
       return state
   }

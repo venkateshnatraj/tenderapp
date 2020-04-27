@@ -4,11 +4,16 @@
   "description": "tender application",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --mode development --open --hot",
     "build": "webpack --mode production",
     "format": "prettier --write \"**/*.+(js|jsx|json|css|md)\"",
     "lint": "eslint src",
-    "lint:fix": "eslint src --fix"
+    "dev-server": "NODE_ENV=dev-server node server.js",
+    "dev-api": "NODE_ENV=dev-api node server.js",
+    "dev": "concurrently --kill-others \"npm run dev-server\" \"npm run dev-api\"",
+    "dev-server1": "set NODE_ENV=dev-server && node server.js",
+    "dev-api1": "set NODE_ENV=dev-api && node server.js",
+    "dev1": "concurrently && --kill-others \"npm run dev-server\" && \"npm run dev-api\"",
+    "start": "webpack -p && node server.js"
   },
   "author": "venkatesh",
   "license": "ISC",
@@ -18,6 +23,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/pickers": "^3.2.10",
     "@material-ui/styles": "^4.9.10",
+    "axios": "^0.19.2",
     "clsx": "^1.1.0",
     "date-fns": "^2.12.0",
     "react": "^16.13.1",

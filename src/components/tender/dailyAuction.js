@@ -8,8 +8,8 @@ import SelectField from '../controls/selectField'
 import { store } from '../../store/store'
 import useFetch from '../../store/useFetch'
 import useDailyAuction from '../../store/useDailyAuction'
-import config from '../../config'
 import { useHistory } from 'react-router-dom'
+import 'whatwg-fetch'
 
 const useStyles = makeStyles((theme) => ({
   textfield: {
@@ -33,30 +33,37 @@ const DailyAuction = () => {
   const classes = useStyles()
   const globalState = useContext(store)
   const { state } = globalState
-  //const [date, setDate] = useState(new Date());
-  const saveDailyAuction= useFetch(`${config.baseApiUrl}tenderDailyAuction.json`,'POST',null,false)
-  //const getCommodity= useFetch(`${config.baseApiUrl}commodity`,'GET',null,true)
-  let displayMessage  = saveDailyAuction.tenderState.message
-  const {setDailyAuction, resetDailyAuction} = useDailyAuction()
+  const saveDailyAuction = useFetch(`tenderDailyAuction.json`,'POST',null,false)
+
+  const isLoading = !(state.masterData && state.masterData.commodity && Object.keys(state.masterData.commodity).length > 0)
+  const getCommodity= useFetch(`commodity`,'GET',null,isLoading)
+
+  const displayMessage  = saveDailyAuction.tenderState.message
+  const {setDailyAuction, resetDailyAuction, setMasterData} = useDailyAuction()
   const history = useHistory()
+
   useEffect(() => {
-    //getCommodity.startFetch()
-    //const data =getCommodity.tenderState.data
-  },[])
+    if (getCommodity.tenderState.data) {
+      const items = {
+        commodity:  getCommodity.tenderState.data[Object.keys(getCommodity.tenderState.data)],
+      }
+      setMasterData(items);
+    }
+  },[getCommodity.tenderState.data])
 
   const onTextHandleChange = (e)=> {
     setDailyAuction({id:e.target.id, value: e.target.value})
   }
+
   const onDateHandleChange = (id, date)=> {
     setDailyAuction({id:id , value: date})
-    //setDate(date)
   }
+
   const onSelectHandleChange = (e)=> {
     //this is to get description
     // let index = e.nativeEvent.target.selectedIndex;
     // let label = e.nativeEvent.target[index].label;
     setDailyAuction({id:e.target.id, value: e.target.value})
-
   }
 
 const submit = (e) =>{
@@ -75,12 +82,6 @@ const cancel = () =>{
   saveDailyAuction.tenderState.message =''
 }
 
-const  commodityList = [
-    {code: 'none', description: ''},
-    {code: 'cmd1', description: 'Option 2'},
-    {code: 'cmd2', description: 'Option 3'},
-    {code: 'cmd3', description: 'Option 4'}
-  ]
   return (
     <Fragment>
          <Typography variant="h6" className ={classes.root} color="primary" align="left" >Daily Auction Annoucement</Typography>
@@ -97,7 +98,7 @@ const  commodityList = [
                   <InputField id="tenderNumber" name ="Tender Number" value ={state.tenderDailyAuction.tenderNumber} onHandleChange ={(e)=>{ onTextHandleChange(e)}} isRequired = {true}></InputField>
                   <InputField id="sessionTime" name ="Session Time" value ={state.tenderDailyAuction.sessionTime} onHandleChange ={(e)=>{onTextHandleChange(e)}}></InputField>
                   <InputField id="intervalTime" name ="Interval Time" value ={state.tenderDailyAuction.intervalTime} onHandleChange ={(e)=>{onTextHandleChange(e)}}></InputField>
-                  <SelectField id="commodity" name ="Commodity" value ={state.tenderDailyAuction.commodity} options={commodityList} onHandleChange ={(e)=>{onSelectHandleChange(e)}}></SelectField>
+                  <SelectField id="commodity" name ="Commodity" value ={state.tenderDailyAuction.commodity} options={state.masterData.commodity} onHandleChange ={(e)=>{onSelectHandleChange(e)}}></SelectField>
                   <InputField id="dummyNumberFrom" name ="Dummy Number From" value ={state.tenderDailyAuction.dummyNumberFrom} onHandleChange ={(e)=>{ onTextHandleChange(e)}} isRequired = {true}></InputField>
                   <InputField id="dummyNumberTo" name ="Dummy Number To" value ={state.tenderDailyAuction.dummyNumberTo} onHandleChange ={(e)=>{onTextHandleChange(e)}}></InputField>
                   <InputField id="sessionNumber" name ="Session Number" value ={state.tenderDailyAuction.sessionNumber} onHandleChange ={(e)=>{onTextHandleChange(e)}}></InputField>

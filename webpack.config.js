@@ -1,10 +1,14 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
+
 module.exports = {
     //entry: './src/index.js',
-    entry: ['babel-polyfill', './src/index.js'],
-
+    entry: {
+        app: ['babel-polyfill', './src/index.js']
+    } ,
+    mode: 'development',
+   
     output : {
         path : path.join(__dirname, '/dist'),
         filename : 'bundle.js',
@@ -35,13 +39,14 @@ module.exports = {
     },
     devServer: {
         historyApiFallback: true,
-        // headers: {
-        //     'Access-Control-Allow-Origin': '*',
-        //     'Access-Control-Allow-Headers': '*',
-        //   },
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': '*',
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+          },
       
       },
-    //devtool: 'cheap-module-eval-source-map',
+    devtool: 'cheap-module-eval-source-map',
     plugins: [
         new HtmlWebpackPlugin({
             template : './src/index.html'

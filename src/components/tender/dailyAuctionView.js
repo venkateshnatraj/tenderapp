@@ -1,5 +1,5 @@
 import React, { Fragment, useState,useEffect, useContext } from 'react'
-import { Typography, Grid, Paper, Divider, Button } from '@material-ui/core'
+import { Typography, Grid, Paper, Divider, Button, NativeSelect } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import { red } from '@material-ui/core/colors';
 import InputField from '../controls/inputField'
@@ -25,6 +25,9 @@ import DoneIcon from '@material-ui/icons/Done';
 import RevertIcon from "@material-ui/icons/NotInterestedOutlined";
 import CancelIcon from '@material-ui/icons/Cancel';
 import DeleteIcon from '@material-ui/icons/Delete'
+
+import CustomTableCell from '../controls/customTableCell'
+
 const useStyles = makeStyles(theme => ({
   root: {
     width: "100%",
@@ -57,24 +60,61 @@ const createData = (name, calories, fat, carbs, protein) => ({
   isEditMode: false
 });
 
-const CustomTableCell = ({ row, name, onChange }) => {
-  const classes = useStyles();
-  const { isEditMode } = row;
-  return (
-    <TableCell align="left" className={classes.tableCell}>
-      {isEditMode ? (
-        <Input
-          value={row[name]}
-          name={name}
-          onChange={e => onChange(e, row)}
-          className={classes.input}
-        />
-      ) : (
-        row[name]
-      )}
-    </TableCell>
-  );
-};
+// const CustomTableCell = ({ row, name, onChange , isReadonly=false,type='text', options=[]}) => {
+//   const classes = useStyles();
+//   const { isEditMode } = row;
+//   let cellItem
+//   const [selectedValue,setSelectedValue] =useState(row[name])
+//   if(isEditMode && !isReadonly && type ==='text'){
+//     cellItem = <Input
+//                   value={row[name]}
+//                   name={name}
+//                   onChange={e => onChange(e, row)}
+//                   className={classes.input}
+//                 />
+//   }
+//   else if(isEditMode && type ==='select'){
+//     console.log(options)
+    
+//     cellItem =  <NativeSelect value={selectedValue} onChange={(e) => onSelectHandleChange(e)} >
+//                   <option aria-label="None" value="" />      
+//                   {options.map(function(option, i) {
+//                     return <option key={i} value={option.code} label={option.description} />
+//                   })}
+//                 </NativeSelect>
+//   }
+//   else {
+//     cellItem =  row[name]
+//   }
+
+//   const onSelectHandleChange = (e)=> {
+//     console.log('testasasa')
+//     setSelectedValue(e.target.value)
+//     //this is to get description
+//     // let index = e.nativeEvent.target.selectedIndex;
+//     // let label = e.nativeEvent.target[index].label;
+//     //setDailyAuction({id:e.target.id, value: e.target.value})
+//   }
+
+
+//   return (
+//     <TableCell align="left" className={classes.tableCell}>
+//        {cellItem}
+//       {/* {isEditMode && !isReadonly ? (
+//         <Input
+//           value={row[name]}
+//           name={name}
+//           onChange={e => onChange(e, row)}
+//           className={classes.input}
+//         />
+//       ) : (
+//         row[name]
+//       )
+      
+//       } */}
+//     </TableCell>
+//   );
+// };
 
 
 const DailyAuctionView = () => {
@@ -85,19 +125,22 @@ const DailyAuctionView = () => {
   const [rows, setRows] = React.useState([])
   const [header, setHeader] = React.useState([])
 
+  const [curselectedValue,setCurSelectedValue] =useState()
   const headerName = [
     'Tender Date',
     'Tender Number',
     'Session Time',
     'Interval Time',
     'Commodity',
-    'Dummy Number From',
-    'Dummy Number To',
-    'Session Number',
-    'In Time',
-    'Out Time',
-    'Bid Rate'
+    // 'Dummy Number From',
+    // 'Dummy Number To',
+    // 'Session Number',
+    // 'In Time',
+    // 'Out Time',
+    // 'Bid Rate'
   ]
+
+
   useEffect(() => {
     setHeader(headerName)
     if(getDailyAuction.tenderState.data) {
@@ -106,23 +149,20 @@ const DailyAuctionView = () => {
          let item = getDailyAuction.tenderState.data[key]
          item.id = key
          item.isEditMode = false
-        //  item.type ='text',
-        //  item.readonly ='false'
+         Object.keys(item).forEach((key)=>{
+              if(key === 'commodity'){
+                console.log(state.masterData.commodity.find(x=>x.code === item[key]))
+                const val =  state.masterData.commodity.find(x=>x.code === item[key])
+                item[key] = val && val.description ? val.description : ''
+              }
+         }) 
          return item 
       })
-      console.log(items)
-      console.log(Array.isArray(items))
-      //const data = items.map(x=>x)
       setRows(items)
     }
-   //console.log(rows)
   },[getDailyAuction.tenderState.data])
 
-  // const [rows, setRows] = React.useState([
-  //   createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  //   createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  //   createData("Eclair", 262, 16.0, 24, 6.0)
-  // ]);
+
   const [previousRowsState, setPreviousRowsState] = React.useState([])
 
   const classes = useStyles();
@@ -146,6 +186,8 @@ const DailyAuctionView = () => {
   const onSave = id => {
     const data = rows.map(row => {
       if (row.id === id) {
+        console.log(curselectedValue)
+        row.commodity = curselectedValue
         return { ...row, isEditMode: !row.isEditMode };
       }
       return row;
@@ -178,6 +220,10 @@ const DailyAuctionView = () => {
     setPreviousRowsState(data)
   };
 
+  const onSelectHandleChange = (value)=> {
+    setCurSelectedValue(value)
+  }
+
   return (
   <Fragment>
           <Typography variant="h6" className ={classes.root} color="primary" align="left" >Daily Auction View</Typography>
@@ -191,9 +237,8 @@ const DailyAuctionView = () => {
                 <Grid item xs={12} sm={11} >
                 <Paper className={classes.root}>
                     <Table className={classes.table} aria-label="caption table">
-                      <caption>A barbone structure table example with a caption</caption>
+                      <caption></caption>
                         <TableHead>
-
                           <TableRow style={{backgroundColor:'#96858F', color: 'white',}}>
                             {header.map(item =>(
                                 <TableCell align="left">{item}</TableCell>
@@ -205,17 +250,17 @@ const DailyAuctionView = () => {
                         <TableBody>
                           {rows.map(row => (
                             <TableRow key={row.id}>
-                              <CustomTableCell {...{ row, name: "tenderDate", onChange }} />
+                              <CustomTableCell {...{ row, name: "tenderDate", onChange, isReadonly:'true' }} />
                               <CustomTableCell {...{ row, name: "tenderNumber", onChange }} />
-                              <CustomTableCell {...{ row, name: "sessionTime", onChange }} />
+                              <CustomTableCell {...{ row, name: "sessionTime", onChange }} />{}
                               <CustomTableCell {...{ row, name: "intervalTime", onChange }} />
-                              <CustomTableCell {...{ row, name: "commodity", onChange }} />
-                              <CustomTableCell {...{ row, name: "dummyNumberFrom", onChange }} />
+                              <CustomTableCell {...{ row, name: "commodity",  type:'select', options: state.masterData.commodity, onSelectHandleChange }} />
+                              {/* <CustomTableCell {...{ row, name: "dummyNumberFrom", onChange }} />
                               <CustomTableCell {...{ row, name: "dummyNumberTo", onChange }} />
                               <CustomTableCell {...{ row, name: "sessionNumber", onChange }} />
                               <CustomTableCell {...{ row, name: "inTime", onChange }} />
                               <CustomTableCell {...{ row, name: "outTime", onChange }} />
-                              <CustomTableCell {...{ row, name: "bidRate", onChange }} />
+                              <CustomTableCell {...{ row, name: "bidRate", onChange }} /> */}
                               <TableCell className={classes.selectTableCell}>
                                 {row.isEditMode ? (
                                   <div>

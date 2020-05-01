@@ -32,7 +32,7 @@ const SideDrawer = (props) => {
           <ListItemLink to="/dailyauction" primary="Daily Auction" />
           <ListItemLink to="/toprate" primary="Top Rate Entry" />
           <ListItemLink to="/dummynumber" primary="Dummy Number Entry" />
-          <ListItemLink to="/sampleview" primary="Sample View" />
+          <ListItemLink to="/dailyauctionview" primary="Daily Auction View" />
           <ListItemLink to="/samplereport" primary="Sample Report" />
         </List>
       </Drawer>

@@ -13,5 +13,11 @@ module.exports = {
             res.json(resp.data);
         });
       });
+      app.get('/api/v1/getDailyAuction', function (req, res) {
+        axios.get(`${config.baseApiUrl}tenderDailyAuction.json`).then(resp => {
+            //console.log(resp)
+            res.json(resp.data);
+        });
+      });
     }
 }

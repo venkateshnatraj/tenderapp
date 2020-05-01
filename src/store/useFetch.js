@@ -66,11 +66,11 @@ const useFetch = (url, action, data, isLoad) => {
             action === 'POST' ? { ...options, ...{ body: JSON.stringify(requestData) } } : options
           url = action === 'GET' ? `${config.proxyApiurl}${url}`  : `${config.baseApiUrl}${url}` 
           const response = await fetch(url, options)
-          console.log(response)
+          //console.log(response)
           if (!response.ok) {
             throw new Error(`${response.status} ${response.statusText}`)
           }
-          console.log(response)
+         // console.log(response)
           data = await response.json()
           console.log(data)
           dispatch({ type: REQUEST_SUCCESSFUL, data })

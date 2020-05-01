@@ -74,7 +74,7 @@ const goToView =()=>{
   resetDailyAuction()
   saveDailyAuction.tenderState.message =''
   history.push({
-    pathname: '/sampleview',
+    pathname: '/dailyauctionview',
   })
 }
 const cancel = () =>{

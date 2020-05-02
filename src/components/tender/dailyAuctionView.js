@@ -27,6 +27,8 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import DeleteIcon from '@material-ui/icons/Delete'
 
 import CustomTableCell from '../controls/customTableCell'
+import { TablePagination, TableFooter} from '@material-ui/core';
+import TablePaginationActionsWrapped from '../controls/tablePaginationAction'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -47,74 +49,14 @@ const useStyles = makeStyles(theme => ({
   input: {
     width: 130,
     height: 40
-  }
+  },
+  // footerTableCell: {
+  //   width: 20,
+  //   align: 'center'
+  // },
 }));
 
-const createData = (name, calories, fat, carbs, protein) => ({
-  id: name.replace(" ", "_"),
-  name,
-  calories,
-  fat,
-  carbs,
-  protein,
-  isEditMode: false
-});
 
-// const CustomTableCell = ({ row, name, onChange , isReadonly=false,type='text', options=[]}) => {
-//   const classes = useStyles();
-//   const { isEditMode } = row;
-//   let cellItem
-//   const [selectedValue,setSelectedValue] =useState(row[name])
-//   if(isEditMode && !isReadonly && type ==='text'){
-//     cellItem = <Input
-//                   value={row[name]}
-//                   name={name}
-//                   onChange={e => onChange(e, row)}
-//                   className={classes.input}
-//                 />
-//   }
-//   else if(isEditMode && type ==='select'){
-//     console.log(options)
-    
-//     cellItem =  <NativeSelect value={selectedValue} onChange={(e) => onSelectHandleChange(e)} >
-//                   <option aria-label="None" value="" />      
-//                   {options.map(function(option, i) {
-//                     return <option key={i} value={option.code} label={option.description} />
-//                   })}
-//                 </NativeSelect>
-//   }
-//   else {
-//     cellItem =  row[name]
-//   }
-
-//   const onSelectHandleChange = (e)=> {
-//     console.log('testasasa')
-//     setSelectedValue(e.target.value)
-//     //this is to get description
-//     // let index = e.nativeEvent.target.selectedIndex;
-//     // let label = e.nativeEvent.target[index].label;
-//     //setDailyAuction({id:e.target.id, value: e.target.value})
-//   }
-
-
-//   return (
-//     <TableCell align="left" className={classes.tableCell}>
-//        {cellItem}
-//       {/* {isEditMode && !isReadonly ? (
-//         <Input
-//           value={row[name]}
-//           name={name}
-//           onChange={e => onChange(e, row)}
-//           className={classes.input}
-//         />
-//       ) : (
-//         row[name]
-//       )
-      
-//       } */}
-//     </TableCell>
-//   );
-// };
 
 
 const DailyAuctionView = () => {
@@ -124,6 +66,9 @@ const DailyAuctionView = () => {
   const getDailyAuction = useFetch(`getDailyAuction`,'GET',null,true)
   const [rows, setRows] = React.useState([])
   const [header, setHeader] = React.useState([])
+
+  const [page, setPage] = React.useState(0)
+  const [rowsPerPage, setRowsPerPage] = React.useState(5)
 
   const [curselectedValue,setCurSelectedValue] =useState()
   const headerName = [
@@ -141,6 +86,15 @@ const DailyAuctionView = () => {
   ]
 
 
+  const handleChangePage = (event, page) => {
+    setPage(page);
+  };
+  
+  const handleChangeRowsPerPage = event => {
+    setPage(0)
+    setRowsPerPage(event.target.value)
+  };
+  
   useEffect(() => {
     setHeader(headerName)
     if(getDailyAuction.tenderState.data) {
@@ -237,9 +191,9 @@ const DailyAuctionView = () => {
                 <Grid item xs={12} sm={11} >
                 <Paper className={classes.root}>
                     <Table className={classes.table} aria-label="caption table">
-                      <caption></caption>
+                      
                         <TableHead>
-                          <TableRow style={{backgroundColor:'#96858F', color: 'white',}}>
+                          <TableRow style={{backgroundColor:'#96858F', color: 'white'}}>
                             {header.map(item =>(
                                 <TableCell align="left">{item}</TableCell>
                               ))}
@@ -248,7 +202,7 @@ const DailyAuctionView = () => {
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          {rows.map(row => (
+                          {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
                             <TableRow key={row.id}>
                               <CustomTableCell {...{ row, name: "tenderDate", onChange, isReadonly:'true' }} />
                               <CustomTableCell {...{ row, name: "tenderNumber", onChange }} />
@@ -298,6 +252,24 @@ const DailyAuctionView = () => {
                             </TableRow>
                           ))}
                         </TableBody>
+                        <TableFooter style={{backgroundColor:'#96858F', color: 'white'}} >
+                           <TableRow  className={classes.footerTableCell}>
+                              <TablePagination 
+                                  rowsPerPageOptions={5}
+                                  colSpan={8}
+                                  count={rows.length}
+                                  rowsPerPage={rowsPerPage}
+                                  page={page}
+                                  SelectProps={{
+                                    native: true,
+                                  }}
+                                  onChangePage={handleChangePage}
+                                  onChangeRowsPerPage={handleChangeRowsPerPage}
+                                  ActionsComponent={TablePaginationActionsWrapped}
+                                />
+
+                          </TableRow>
+                      </TableFooter>
                     </Table>
                   </Paper>
                 </Grid>

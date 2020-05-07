@@ -10,7 +10,8 @@ import useFetch from '../../store/useFetch'
 import useDailyAuction from '../../store/useDailyAuction'
 import { useHistory } from 'react-router-dom'
 import 'whatwg-fetch'
-
+import useValidator from '../../store/useValidator'
+import dailyAuctionModel from '../../store/dailyAuctionModel'
 const useStyles = makeStyles((theme) => ({
   textfield: {
     height: 16 ,
@@ -40,6 +41,8 @@ const DailyAuction = () => {
 
   const displayMessage  = saveDailyAuction.tenderState.message
   const {setDailyAuction, resetDailyAuction, setMasterData} = useDailyAuction()
+
+  const {errorMessage, validateInput, validateAllInput} = useValidator(getCommodity.tenderState.data,dailyAuctionModel)
   const history = useHistory()
 
   useEffect(() => {
@@ -49,9 +52,12 @@ const DailyAuction = () => {
       }
       setMasterData(items);
     }
-  },[getCommodity.tenderState.data])
+    console.log(errorMessage)
+  },[getCommodity.tenderState.data ,errorMessage])
 
   const onTextHandleChange = (e)=> {
+    validateInput(e.target)
+    
     setDailyAuction({id:e.target.id, value: e.target.value})
   }
 
@@ -94,9 +100,9 @@ const cancel = () =>{
               <Grid item xs={1} sm={3}  />
                  
               <Grid item xs={12} sm={9} lg={5}>
-                  <DateField id="tenderDate" selectedDate={state.tenderDailyAuction.tenderDate } name ="Tender Date"  onHandleChange ={(id,date)=>{ onDateHandleChange(id, date)}} ></DateField>
-                  <InputField id="tenderNumber" name ="Tender Number" value ={state.tenderDailyAuction.tenderNumber} onHandleChange ={(e)=>{ onTextHandleChange(e)}} isRequired = {true}></InputField>
-                  <InputField id="sessionTime" name ="Session Time" value ={state.tenderDailyAuction.sessionTime} onHandleChange ={(e)=>{onTextHandleChange(e)}}></InputField>
+                  <DateField id="tenderDate" selectedDate={state.tenderDailyAuction.tenderDate } name ="Tender Date"  onHandleChange ={(id,date)=>{ onDateHandleChange(id, date)}}  ></DateField>
+                  <InputField id="tenderNumber" name ="Tender Number" value ={state.tenderDailyAuction.tenderNumber} onHandleChange ={(e)=>{ onTextHandleChange(e)}} isRequired = {true} error ={errorMessage.tenderNumber}></InputField>
+                  <InputField id="sessionTime" name ="Session Time" value ={state.tenderDailyAuction.sessionTime} onHandleChange ={(e)=>{onTextHandleChange(e)}} error ={errorMessage.sessionTime}></InputField>
                   <InputField id="intervalTime" name ="Interval Time" value ={state.tenderDailyAuction.intervalTime} onHandleChange ={(e)=>{onTextHandleChange(e)}}></InputField>
                   <SelectField id="commodity" name ="Commodity" value ={state.tenderDailyAuction.commodity} options={state.masterData.commodity} onHandleChange ={(e)=>{onSelectHandleChange(e)}}></SelectField>
                   <InputField id="dummyNumberFrom" name ="Dummy Number From" value ={state.tenderDailyAuction.dummyNumberFrom} onHandleChange ={(e)=>{ onTextHandleChange(e)}} isRequired = {true}></InputField>

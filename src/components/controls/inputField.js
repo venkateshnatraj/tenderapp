@@ -9,14 +9,54 @@ const useStyles = makeStyles((theme) => ({
   root: {
     margin: 8,
     color: red,
-    width: 200
+    width: 200,
+  },
+  inputError: {
+    
+    // '& label.Mui-focused': {
+    //   color: 'green',
+    // },
+    // '& .MuiInput-underline:after': {
+    //   borderBottomColor: 'green',
+    // },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'red',
+      },
+      // '&:hover fieldset': {
+      //   borderColor: 'yellow',
+      // },
+      // '&.Mui-focused fieldset': {
+      //   borderColor: 'green',
+      // },
+    }
+  },
+  input: {
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'primary',
+      },
+    }
   },
   Typography: {
     margin: 4,
-    color: '#F51720'
+    color: '#F51720',
+    fontSize:12
+  },
+  error: {
+    color: 'red',
+    '& p': {
+      color: 'red',
+      '& span': {
+        color: 'blue'
+      }
+    },
+    fontSize:12
+    
   }
 }))
 const InputField = ({ id, name, value, onHandleChange, isRequired, error }) => {
+
   const classes = useStyles()
   return (
     <div className="fieldContainer">
@@ -27,16 +67,16 @@ const InputField = ({ id, name, value, onHandleChange, isRequired, error }) => {
         <TextField
           id={id}
           variant="outlined"
-          color="primary"
+           color="primary"
           value={value}
           onChange={onHandleChange}
+          className ={ error ? classes.inputError : classes.input}
         />
-        {/* <Typography color="primary"  variant="inherit"  display="inline"  >{"this is error"}</Typography> */}
-      </div>
-      <Typography variant="inherit" display="inline" align="center" className={classes.Typography}>
+        <br></br> 
+        <Typography  display="inline" align="center" className={classes.Typography}>
         {error}
       </Typography>
-      {/* <InputLabel className={classes.root} >{name}</InputLabel> */}
+      </div>
     </div>
   )
 }

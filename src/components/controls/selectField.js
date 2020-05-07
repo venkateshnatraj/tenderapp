@@ -11,7 +11,7 @@ const BootstrapInput = withStyles((theme) => ({
     'label + &': {
       marginTop: theme.spacing(3)
     },
-    width: 330
+    width: 335
   },
   input: {
     borderRadius: 4,
@@ -38,7 +38,8 @@ const BootstrapInput = withStyles((theme) => ({
       borderRadius: 1,
       borderColor: '#96858F'
       // boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
-    }
+    },
+    margin: '0 0 4px 8px'
   }
 }))(InputBase)
 
@@ -50,7 +51,32 @@ const useStyles = makeStyles((theme) => ({
   },
   Typography: {
     margin: 4,
-    color: '#F51720'
+    color: '#F51720',
+    fontSize:12
+  },
+  inputError: {
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'red',
+      },
+    }
+  },
+  input: {
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'primary',
+      },
+    }
+  },
+  error: {
+    '& p': {
+      color: 'red',
+      '& span': {
+        color: 'blue'
+      }
+    },
+    fontSize:12
+    
   }
 }))
 const SelectField = ({ id, name, value, options, onHandleChange, isRequired, error }) => {
@@ -62,10 +88,6 @@ const SelectField = ({ id, name, value, options, onHandleChange, isRequired, err
       </InputLabel>
       <div className="container">
         <NativeSelect id={id} value={value} onChange={onHandleChange} input={<BootstrapInput />}>
-          {/* <option aria-label="None" value="" />
-                        <option value={10}>Ten</option>
-                        <option value={20}>Twenty</option>
-                        <option value={30}>Thirty</option> */}
           {options.map(function(option, i) {
             return <option key={i} value={option.code} label={option.description} />
           })}
@@ -74,6 +96,7 @@ const SelectField = ({ id, name, value, options, onHandleChange, isRequired, err
       <Typography variant="inherit" display="inline" align="center" className={classes.Typography}>
         {error}
       </Typography>
+      {/* <p className={classes.error}>{error}</p> */}
     </div>
   )
 }

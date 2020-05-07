@@ -33,8 +33,8 @@ const reducer = (state, action) => {
       return { ...state, ...resetData }
     case 'setMasterData':
         const master = { ...state }
-        console.log('action.payload' )
-        console.log(action.payload )
+        // console.log('action.payload' )
+        // console.log(action.payload )
         master.masterData = { ...action.payload }
         return { ...state, ...master }
     default:

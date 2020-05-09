@@ -2,7 +2,8 @@ import React, { createContext, useReducer } from 'react'
 
 const initialState = {
   masterData: {
-    commodity: []
+    commodity: [],
+    Tax: []
   },
   tenderDailyAuction: {
     tenderDate: new Date(),
@@ -16,6 +17,10 @@ const initialState = {
     inTime: '',
     outTime: '',
     bidRate: ''
+  },
+  dummyNumberEntry :{
+    tenderNumber: '',
+    sessionTime: '',
   }
 }
 const store = createContext(initialState)
@@ -37,10 +42,19 @@ const reducer = (state, action) => {
         // console.log(action.payload )
         master.masterData = { ...action.payload }
         return { ...state, ...master }
+    case 'setDummyNumber':
+      //console.log(action.payload);
+      const dummy= { ...state }
+      dummy.dummyNumberEntry[action.payload.id] = action.payload.value
+      // Object.assign(state, dummy)
+      // return state
+      return { ...state, ...dummy }
     default:
       return state
   }
 }
+
+
 
 const StateProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)

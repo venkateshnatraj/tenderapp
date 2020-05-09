@@ -23,7 +23,6 @@ function App() {
                 <Route path="/dailyauctionview" component={DailyAuctionView} />
                 <Route path="/samplereport" component={SampleReport} />
                 <Route path="/dailyauction" component={DailyAuction} />
-                <Route path="/" exact component={DailyAuction} />
               </Switch>
             </Layout>
           </ThemeProvider>

@@ -1,8 +1,7 @@
 const path = require('path');
-var webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
-
+const env = process.env.NODE_ENV === 'prod' ? "production" : "development";
 module.exports = {
     //entry: './src/index.js',
     entry: {
@@ -38,14 +37,20 @@ module.exports = {
              }
         ]
     },
+    resolve: {
+        alias: {
+          "@environment$": `${__dirname}/config/${env}.js`
+        }
+    },
     devServer: {
         historyApiFallback: true,
-        headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Headers': '*',
-            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-          },
-      
+        proxy: {
+            '/api': {
+              target: 'http://localhost:8081',
+              changeOrigin: true,
+              secure: false
+            }
+          }
       },
     devtool: 'cheap-module-eval-source-map',
     optimization: {

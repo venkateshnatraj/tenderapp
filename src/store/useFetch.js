@@ -1,6 +1,6 @@
 import { useReducer, useEffect, useState } from 'react'
 import 'whatwg-fetch'
-import config from '../../config'
+import config from '@environment'
 
 const REQUEST_STARTED = 'REQUEST_STARTED'
 const REQUEST_SUCCESSFUL = 'REQUEST_SUCCESSFUL'
@@ -62,11 +62,17 @@ const useFetch = (url, action, data, isLoad) => {
               'Content-Type': 'application/json'
             },
           }
-          options =
-            action === 'POST' ? { ...options, ...{ body: JSON.stringify(requestData) } } : options
-          url = action === 'GET' ? `${config.proxyApiurl}${url}`  : `${config.baseApiUrl}${url}` 
+          // options =
+          //   action === 'POST' ? { ...options, ...{ body: JSON.stringify(requestData) } } : options
+          // url = action === 'GET' ? `${config.proxyApiurl}${url}`  : `${config.baseApiUrl}${url}` 
+          
+
+          options = action === 'POST' ? { ...options, ...{ body: JSON.stringify(requestData) } } : options
+          console.log(options)
+          url = `${config.baseApiUrl}${url}`
           const response = await fetch(url, options)
           //console.log(response)
+          console.log(url)
           if (!response.ok) {
             throw new Error(`${response.status} ${response.statusText}`)
           }

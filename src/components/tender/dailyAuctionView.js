@@ -63,7 +63,7 @@ const DailyAuctionView = () => {
 
   const globalState = useContext(store)
   const { state } = globalState
-  const getDailyAuction = useFetch(`getDailyAuction`,'GET',null,true)
+  const getDailyAuction = useFetch(`tenderDailyAuction`,'GET',null,true)
   const [rows, setRows] = React.useState([])
   const [header, setHeader] = React.useState([])
 

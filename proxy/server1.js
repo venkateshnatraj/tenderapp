@@ -9,7 +9,7 @@ var express = require('express');
 // #####################
 
 // Local files
-var config = require('./webpack.config.js');
+var config = require('../webpack.config.js');
  var api = require('./api');
  const env = process.env.NODE_ENV
  console.log(env)

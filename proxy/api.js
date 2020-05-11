@@ -1,5 +1,5 @@
 const axios = require('axios')
-const config = require('./config')
+const config = require('../config')
 module.exports = {
     defineApi: function(app){
       app.get('/api/v1/hello', function (req, res) {
@@ -13,9 +13,15 @@ module.exports = {
             res.json(resp.data);
         });
       });
-      app.get('/api/v1/getDailyAuction', function (req, res) {
+      app.get('/api/v1/tenderDailyAuction', function (req, res) {
         axios.get(`${config.baseApiUrl}tenderDailyAuction.json`).then(resp => {
             //console.log(resp)
+            res.json(resp.data);
+        });
+      });
+      app.post('/api/v1/tenderDailyAuction', function (req, res) {
+        axios.post(`${config.baseApiUrl}tenderDailyAuction.json`, req.body).then(resp => {
+            console.log(resp)
             res.json(resp.data);
         });
       });

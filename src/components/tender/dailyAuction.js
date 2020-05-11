@@ -34,7 +34,7 @@ const DailyAuction = () => {
   const classes = useStyles()
   const globalState = useContext(store)
   const { state } = globalState
-  const saveDailyAuction = useFetch(`tenderDailyAuction.json`,'POST',null,false)
+  const saveDailyAuction = useFetch(`tenderDailyAuction`,'POST',null,false)
 
   const isLoading = !(state.masterData && state.masterData.commodity && Object.keys(state.masterData.commodity).length > 0)
   const getCommodity= useFetch(`commodity`,'GET',null,isLoading)

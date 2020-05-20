@@ -35,7 +35,7 @@ const DailyAuction = () => {
   const globalState = useContext(store)
   const { state } = globalState
   const saveDailyAuction = useFetch(`tenderDailyAuction`,'POST',null,false)
-
+  const test = useFetch(`employees`,'get',null,true)
   const isLoading = !(state.masterData && state.masterData.commodity && Object.keys(state.masterData.commodity).length > 0)
   const getCommodity= useFetch(`commodity`,'GET',null,isLoading)
 
@@ -46,6 +46,7 @@ const DailyAuction = () => {
   const history = useHistory()
 
   useEffect(() => {
+    console.log(test)
     if (getCommodity.tenderState.data) {
       const items = {
         commodity:  getCommodity.tenderState.data[Object.keys(getCommodity.tenderState.data)],

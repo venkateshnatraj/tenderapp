@@ -61,6 +61,7 @@ const useFetch = (url, action, data, isLoad) => {
             headers: {
               'Content-Type': 'application/json'
             },
+            withCredentials: false
           }
           // options =
           //   action === 'POST' ? { ...options, ...{ body: JSON.stringify(requestData) } } : options

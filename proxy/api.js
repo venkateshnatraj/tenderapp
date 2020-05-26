@@ -21,7 +21,7 @@ module.exports = {
       });
       app.post('/api/v1/tenderDailyAuction', function (req, res) {
         axios.post(`${config.baseApiUrl}tenderDailyAuction.json`, req.body).then(resp => {
-            console.log(resp)
+            // console.log(resp)
             res.json(resp.data);
         });
       });

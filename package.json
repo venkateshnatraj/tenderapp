@@ -12,7 +12,11 @@
     "dev-proxy": "node proxy\\server.js",
     "dev1": "concurrently --kill-others \"npm run dev-server\" \"npm run dev-api\"",
     "start": "webpack -p",
-    "dev": "set NODE_ENV=dev&& concurrently --kill-others \"npm run start1\" \"npm run dev-proxy\""
+    "dev": "set NODE_ENV=dev&& concurrently --kill-others \"npm run start1\" \"npm run dev-proxy\"",
+    "cy:open": "node_modules/.bin/cypress open",
+    "cy:run": "node_modules/.bin/cypress run",
+    "test:ci": "start-server-and-test dev http://localhost:8080 cy:run",
+    "test:local": "start-server-and-test dev http://localhost:8080 cy:open"
   },
   "author": "venkatesh",
   "license": "ISC",
@@ -43,6 +47,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.5.2",
+    "cypress": "^4.6.0",
     "eslint": "^6.6.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-config-prettier": "^6.10.0",
@@ -55,6 +60,7 @@
     "eslint-plugin-react-hooks": "^1.7.0",
     "html-webpack-plugin": "^4.2.0",
     "prettier": "^1.19.1",
+    "start-server-and-test": "^1.11.0",
     "style-loader": "^1.1.4",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",

@@ -5,7 +5,7 @@ import clsx from 'clsx'
 import PermIdentityIcon from '@material-ui/icons/PermIdentity'
 import Badge from '@material-ui/core/Badge'
 import NotificationsActiveSharpIcon from '@material-ui/icons/NotificationsActiveSharp'
-import { useStyles } from './styles'
+import useStyles  from './styles'
 
 const Header = (props) => {
   const classes = useStyles()

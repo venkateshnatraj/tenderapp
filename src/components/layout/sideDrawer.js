@@ -6,7 +6,7 @@ import { useTheme } from '@material-ui/core/styles'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import { IconButton } from '@material-ui/core'
-import { useStyles } from './styles'
+import  useStyles  from './styles'
 import ListItemLink from './listItemLink'
 
 const SideDrawer = (props) => {

@@ -5,7 +5,7 @@ import clsx from 'clsx'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Header from './header'
 import SideDrawer from './sideDrawer'
-import { useStyles } from './styles'
+import useStyles  from './styles'
 
 const Layout = (props) => {
   const classes = useStyles()

@@ -6,7 +6,7 @@ const env  = process.env.NODE_ENV === "dev" ? "development" : "production" ;
 module.exports = {
     //entry: './src/index.js',
     entry: {
-        app: ['babel-polyfill', './src/index.js']
+        app: ['@babel/polyfill', './src/index.js']
     } ,
     mode: 'development',
    

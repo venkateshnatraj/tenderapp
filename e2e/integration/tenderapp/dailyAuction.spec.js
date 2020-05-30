@@ -12,5 +12,6 @@ describe("Daily Auction", () => {
       //cy.get('#tenderNumber').type('113123');
       cy.get('.MuiGrid-container.MuiGrid-item > :nth-child(2) > .MuiButtonBase-root').click();
       cy.get('.MuiTypography-colorSecondary').contains('Successful')
-    });
+      
+      
   });

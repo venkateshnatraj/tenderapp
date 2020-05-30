@@ -64,4 +64,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-module.exports = { useStyles }
+//module.exports = { useStyles }
+
+export default useStyles

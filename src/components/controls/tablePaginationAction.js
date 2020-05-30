@@ -22,54 +22,54 @@ const actionsStyles = theme => ({
   },
 });
 
-class TablePaginationActions extends React.Component {
-  handleFirstPageButtonClick = event => {
-    this.props.onChangePage(event, 0);
+const TablePaginationActions = (props) => {
+  const handleFirstPageButtonClick = event => {
+    props.onChangePage(event, 0);
+  }
+
+  const handleBackButtonClick = event => {
+    props.onChangePage(event, props.page - 1);
   };
 
-  handleBackButtonClick = event => {
-    this.props.onChangePage(event, this.props.page - 1);
+  const handleNextButtonClick = event => {
+    props.onChangePage(event, props.page + 1);
   };
 
-  handleNextButtonClick = event => {
-    this.props.onChangePage(event, this.props.page + 1);
-  };
-
-  handleLastPageButtonClick = event => {
-    this.props.onChangePage(
+  const handleLastPageButtonClick = event => {
+    props.onChangePage(
       event,
-      Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1),
+      Math.max(0, Math.ceil(props.count / props.rowsPerPage) - 1),
     );
   };
 
-  render() {
-    const { classes, count, page, rowsPerPage, theme } = this.props;
+
+    const { classes, count, page, rowsPerPage, theme } = props;
 
     return (
       <div className={classes.root}>
         <IconButton
-          onClick={this.handleFirstPageButtonClick}
+          onClick={handleFirstPageButtonClick}
           disabled={page === 0}
           aria-label="First Page"
         >
           {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
         </IconButton>
         <IconButton
-          onClick={this.handleBackButtonClick}
+          onClick={handleBackButtonClick}
           disabled={page === 0}
           aria-label="Previous Page"
         >
           {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
         </IconButton>
         <IconButton
-          onClick={this.handleNextButtonClick}
+          onClick={handleNextButtonClick}
           disabled={page >= Math.ceil(count / rowsPerPage) - 1}
           aria-label="Next Page"
         >
           {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
         </IconButton>
         <IconButton
-          onClick={this.handleLastPageButtonClick}
+          onClick={handleLastPageButtonClick}
           disabled={page >= Math.ceil(count / rowsPerPage) - 1}
           aria-label="Last Page"
         >
@@ -77,7 +77,6 @@ class TablePaginationActions extends React.Component {
         </IconButton>
       </div>
     );
-  }
 }
 
 TablePaginationActions.propTypes = {
